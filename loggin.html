@@ -32,7 +32,7 @@
         .container { 
             display: flex;
             width: 50%;
-            height: 1300px;
+            height: 700px;
             margin-top: 20px;
             border: 2px solid black;
         }          
@@ -64,7 +64,7 @@
        }
 
        .bottom { 
-          flex: 3;
+          flex: ;
           background-color: #009dff52;
        }
 
@@ -73,21 +73,15 @@
             display: flex;
             flex-direction: column; 
             width: 80%;
+            margin-bottom: 10px;
         }        
         .login { 
             display: flex;
             flex-direction: column; 
             width: 80%;
+            
         }          
-    
-        .registration input, 
-        .registration select, 
-        .registration textarea {
-            margin: 5px 0;
-            padding: 8px;
-            width: 100%;
-        }          
-    
+        
         .registration button {
             padding: 8px;
             background-color: black;
@@ -95,6 +89,7 @@
             border: none;
             cursor: pointer;
         }
+        
     </style>
     
 </head> 
@@ -139,9 +134,9 @@
                 </select>
 
                 Gender: 
-                <label><input type="radio" name="gender" value="male" required> Male:</label>
-                <label><input type="radio" name="gender" value="female"> Female: </label>
-                <label><input type="radio" name="gender" value="other"> Other: </label><br>
+                <label><input type="radio" name="gender" value="male" required> Male</label>
+                <label><input type="radio" name="gender" value="female"> Female </label>
+                <label><input type="radio" name="gender" value="other"> Other </label><br>
 
                 Favorite Color: <input type="color" id="color">
 
@@ -159,12 +154,56 @@
         <div class="right">             
             <div class="top">
                 <form class="login" id="loginForm">
-                    <h3>Login</h3> <br>                
-                    Email: <input type="email" id="email" placeholder="User Email" required>   <br>               
+                    <h3>Login</h3>               
+                    Email: <input type="email" id="email" placeholder="User Email" required>              
                     Password: <input type="password" id="password" placeholder="Password" required> <br>  
-                    <button type="submit">Login</button>    
+                    <button type="submit">Login </button>  
             </div>             
-            <div class="bottom"></div>         
+            <div class="bottom" style="position: relative; overflow: hidden;">
+                <!-- Overlay box -->
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 70%;
+                    align-items: center;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    z-index: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: rgb(255, 0, 0);
+                    font-size: 24px;
+                    font-weight: bold;
+                ">
+                    Login Required!!!
+                </div>
+            
+                <!-- Table (beneath overlay) -->
+                <h3 style="text-align: center; position: relative; z-index: 0;">City-wise Air Quality Index (AQI)</h3>
+                <table style="width: 90%; margin: 0 auto; border-collapse: collapse; text-align: center; position: relative; z-index: 0;">
+                    <thead>
+                        <tr style="background-color: #ddd;">
+                            <th style="border: 1px solid black; padding: 8px;">City</th>
+                            <th style="border: 1px solid black; padding: 8px;">AQI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style="border: 1px solid black; padding: 8px;"></td><td style="border: 1px solid black; padding: 8px;"></td></tr>
+                        <tr><td style="border: 1px solid black; padding: 8px;"></td><td style="border: 1px solid black; padding: 8px;"></td></tr>
+                        <tr><td style="border: 1px solid black; padding: 8px;"></td><td style="border: 1px solid black; padding: 8px;"></td></tr>
+                        <tr><td style="border: 1px solid black; padding: 8px;"></td><td style="border: 1px solid black; padding: 8px;"></td></tr>
+                        <tr><td style="border: 1px solid black; padding: 8px;"></td><td style="border: 1px solid black; padding: 8px;"></td></tr>
+                        <tr><td style="border: 1px solid black; padding: 8px;"></td><td style="border: 1px solid black; padding: 8px;"></td></tr>
+                        <tr><td style="border: 1px solid black; padding: 8px;"></td><td style="border: 1px solid black; padding: 8px;"></td></tr>
+                        <tr><td style="border: 1px solid black; padding: 8px;"></td><td style="border: 1px solid black; padding: 8px;"></td></tr>
+                        <tr><td style="border: 1px solid black; padding: 8px;"></td><td style="border: 1px solid black; padding: 8px;"></td></tr>
+                        <tr><td style="border: 1px solid black; padding: 8px;"></td><td style="border: 1px solid black; padding: 8px;"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+                    
         </div>     
     </div>  
 
