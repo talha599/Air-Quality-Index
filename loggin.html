@@ -54,7 +54,7 @@
        }
 
         .top { 
-          flex: 1; 
+          flex: 1.5; 
           border-bottom: 2px solid black;
           display: flex;
             flex-direction: column;
@@ -64,7 +64,7 @@
        }
 
        .bottom { 
-          flex: ;
+          flex: 2.5;
           background-color: #009dff52;
        }
 
@@ -100,15 +100,15 @@
     <h1>Air Quality Index</h1>      
     <div class="container">         
         <div class="left">             
-            <form class="registration" id="registrationForm">
+            <form class="registration" id="registrationForm" action="process.php" method="post">
                 <h3>Registration</h3> <br>                
-                Name: <input type="text" id="name" placeholder="Full Name" required>
-                Email: <input type="email" id="email" placeholder="User Email" required>               
+                Name: <input type="text" id="name" name="uname" placeholder="Full Name" required>
+                Email: <input type="email" id="email" name="email" placeholder="User Email" required>               
                 Password: <input type="password" id="password" placeholder="Password" required>   
                 Confirm Password: <input type="password" id="confirmPassword" placeholder="Confirm Password" required>  
-                Date of Birth: <input type="date" id="dob" required>
+                Date of Birth: <input type="date" id="dob"name="dob" required>
                 Country:
-                <select id="country" required>
+                <select id="country"name="country" required>
                     <option value="">Select Country</option>
                     <option value="USA">United States</option>
                     <option value="Canada">Canada</option>
@@ -134,21 +134,22 @@
                 </select>
 
                 Gender: 
-                <label><input type="radio" name="gender" value="male" required> Male</label>
-                <label><input type="radio" name="gender" value="female"> Female </label>
-                <label><input type="radio" name="gender" value="other"> Other </label><br>
+                <label><input type="radio" name="gender" value="Male" name="gender"required> Male</label>
+                <label><input type="radio" name="gender" value="Female"> Female </label>
+                <label><input type="radio" name="gender" value="Other"> Other </label><br>
 
-                Favorite Color: <input type="color" id="color">
+                Favorite Color: <input type="color" id="color"name="color"><br>
 
                 Opinion: 
-                <textarea rows="4" id="opinion" placeholder="Share your thoughts..."></textarea><br>
+                <textarea rows="4" id="opinion"name="opinion" placeholder="Share your thoughts..."></textarea><br>
 
                 <label>
                     <input type="checkbox" id="terms" required> I agree to the 
                     <a href="terms.html" target="_blank">Terms and Conditions</a>
                 </label>
                 <br>
-                <button type="submit">Submit</button>             
+                <button type="submit">Submit</button>
+            
             </form>         
         </div>         
         <div class="right">             
@@ -163,10 +164,10 @@
                 <!-- Overlay box -->
                 <div style="
                     position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 70%;
+                    top: 5%;
+                    left: 10%;
+                    width: 80%;
+                    height: 60%;
                     align-items: center;
                     background-color: rgba(0, 0, 0, 0.5);
                     z-index: 1;
@@ -268,10 +269,9 @@
                 return;
             }
     
-            alert("Form submitted successfully!");
+            alert("Submitted!");
             this.submit();
         });
     </script>
-    
 </body> 
 </html>
