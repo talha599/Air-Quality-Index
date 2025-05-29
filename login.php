@@ -102,7 +102,7 @@
         <div class="left">             
             <form class="registration" id="registrationForm" action="process.php" method="post">
                 <h3>Registration</h3> <br>                
-                Name: <input type="text" id="name" name="uname" placeholder="Full Name" required>
+                Name: <input type="text" id="name" name="name" placeholder="Full Name" required>
                 Email: <input type="email" id="email" name="email" placeholder="User Email" required>               
                 Password: <input type="password" id="password" placeholder="Password" required>   
                 Confirm Password: <input type="password" id="confirmPassword" placeholder="Confirm Password" required>  
