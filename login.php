@@ -1,3 +1,4 @@
+
 <!DOCTYPE html> 
 <html lang="en"> 
 <head>     
@@ -91,7 +92,26 @@
         }
         
     </style>
-    
+        <?php
+     session_start();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $conn = mysqli_connect("localhost", "root", "", "aqi");
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+ 
+    $res = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+    $admin = mysqli_fetch_assoc($res);
+ 
+    if ($admin && $admin['password'] === $password) {
+        $_SESSION['admin_email'] = $admin['email'];
+        $_SESSION['admin_name'] = $admin['name'];
+        header("Location: request.php");
+        exit();
+    } else {
+        echo "<p style='color:red; text-align:center;'>Invalid credentials.</p>";
+    }
+}
+?>
 </head> 
 <body>      
      
@@ -150,16 +170,23 @@
                 <br>
                 <button type="submit">Submit</button>
             
-            </form>         
+            </form>  
+            
+            
+
         </div>         
         <div class="right">             
             <div class="top">
-                <form class="login" id="loginForm">
+                <form class="login" id="loginForm" method="POST" action="request.php">
+
                     <h3>Login</h3>               
-                    Email: <input type="email" id="email" placeholder="User Email" required>              
-                    Password: <input type="password" id="password" placeholder="Password" required> <br>  
+                   Email: <input type="email" name="login_email" placeholder="User Email" required>
+                   Password: <input type="password" name="login_password" placeholder="Password" required> <br>  
                     <button type="submit">Login </button>  
-            </div>             
+            </div>
+
+
+        
             <div class="bottom" style="position: relative; overflow: hidden;">
                 <!-- Overlay box -->
                 <div style="

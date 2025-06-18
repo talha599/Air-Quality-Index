@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Create placeholders for prepared statement
     $placeholders = implode(',', array_fill(0, count($cleanCities), '?'));
-    $stmt = $conn->prepare("SELECT City, Country, AQI FROM info WHERE City IN ($placeholders)");
+    $stmt = $conn->prepare("SELECT City, Country, AQI FROM infos WHERE City IN ($placeholders)");
 
     // Bind parameters
     $types = str_repeat('s', count($cleanCities));

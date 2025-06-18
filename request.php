@@ -1,3 +1,4 @@
+
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST['cities']) || count($_POST['cities']) !== 10) {
@@ -10,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "</ul>";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -32,26 +34,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form method="POST" action="showaqi.php" onsubmit="return validateForm();">
         <?php
         $cities = [
-            "Tokyo, Japan",
-            "Paris, France",
-            "New York, USA",
-            "London, UK",
-            "Berlin, Germany",
-            "Rome, Italy",
-            "Cairo, Egypt",
-            "Moscow, Russia",
-            "Beijing, China",
-            "Sydney, Australia",
-            "Toronto, Canada",
-            "Seoul, South Korea",
-            "São Paulo, Brazil",
-            "Istanbul, Turkey",
-            "Bangkok, Thailand",
-            "Nairobi, Kenya",
-            "Dubai, UAE",
-            "Mexico City, Mexico",
-            "Mumbai, India",
-            "Buenos Aires, Argentina"
+            "Tokyo",
+            "Paris",
+            "New York",
+            "London",
+            "Berlin",
+            "Rome",
+            "Cairo",
+            "Moscow",
+            "Beijing",
+            "Sydney",
+            "Toronto",
+            "Seoul",
+            "São Paulo",
+            "Istanbul",
+            "Bangkok",
+            "Nairobi",
+            "Dubai",
+            "Mexico City",
+            "Mumbai",
+            "Buenos Aires"
         ];
 
         foreach ($cities as $city) {
@@ -59,7 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         ?>
         <br>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit"><br>
     </form>
+    <a href="logout.php">Logout</a>
 </body>
 </html>

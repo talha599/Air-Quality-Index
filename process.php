@@ -6,16 +6,11 @@ $DB_HOST = "localhost";
 $DB_USER = "root";
 $DB_PASS = "";
 $DB_NAME = "aqi";
-/* ----------------------------------------- */
-
-/* ----------  CONNECT TO MYSQL  ----------- */
 $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 if ($conn->connect_error) {
     die("Database connection failed → " . $conn->connect_error);
 }
-/* ----------------------------------------- */
 
-/* ----------  STEP 2: CONFIRM CLICKED  ----- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
     if (empty($_SESSION['reg'])) {
         die("⚠️ No pending registration found.");
@@ -23,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
 
     $d = $_SESSION['reg'];
     $stmt = $conn->prepare(
-        "INSERT INTO user (name, email, password, dob, country, gender, opinion)
+        "INSERT INTO users (name, email, password, dob, country, gender, opinion)
          VALUES (?, ?, ?, ?, ?, ?, ?)"
     );
     if (!$stmt) {
@@ -40,8 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
 
     if ($stmt->execute()) {
         unset($_SESSION['reg']);
-        header("Location: lo
-        gin.php?registered=1");
+        header("Location: login.php?registered=1");
         exit;
     } else {
         echo "❌ Database error → " . $stmt->error;
