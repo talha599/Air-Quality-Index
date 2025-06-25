@@ -11,40 +11,36 @@ if ($conn->connect_error) {
     die("Database connection failed → " . $conn->connect_error);
 }
 
+/* ----------  FINAL CONFIRMATION STEP ---------- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
     if (empty($_SESSION['reg'])) {
         die("⚠️ No pending registration found.");
     }
 
     $d = $_SESSION['reg'];
-    $stmt = $conn->prepare(
-        "INSERT INTO users (name, email, password, dob, country, gender, opinion)
-         VALUES (?, ?, ?, ?, ?, ?, ?)"
-    );
-    if (!$stmt) {
-        die("Prepare failed → " . $conn->error);
-    }
+    $name = $conn->real_escape_string($d['name']);
+    $email = $conn->real_escape_string($d['email']);
+    $password = $conn->real_escape_string($d['password']); // plain password
+    $dob = $conn->real_escape_string($d['dob']);
+    $country = $conn->real_escape_string($d['country']);
+    $gender = $conn->real_escape_string($d['gender']);
+    $opinion = $conn->real_escape_string($d['opinion']);
 
-    $hashed = password_hash($d['password'], PASSWORD_DEFAULT);
+    $sql = "INSERT INTO users (name, email, password, dob, country, gender, opinion)
+            VALUES ('$name', '$email', '$password', '$dob', '$country', '$gender', '$opinion')";
 
-    $stmt->bind_param(
-        "sssssss",
-        $d['name'], $d['email'], $hashed,
-        $d['dob'], $d['country'], $d['gender'], $d['opinion']
-    );
-
-    if ($stmt->execute()) {
+    if ($conn->query($sql)) {
         unset($_SESSION['reg']);
         header("Location: login.php?registered=1");
         exit;
     } else {
-        echo "❌ Database error → " . $stmt->error;
+        echo "❌ Database error → " . $conn->error;
     }
-    $stmt->close();
     $conn->close();
     exit;
 }
 
+/* ----------  STORE REG DATA TO SESSION ---------- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['reg'] = [
         'name'     => $_POST['name']     ?? '',
@@ -54,14 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'country'  => $_POST['country']  ?? '',
         'gender'   => $_POST['gender']   ?? '',
         'opinion'  => $_POST['opinion']  ?? '',
-        'color'    => $_POST['color']    ?? '' // not stored in DB, only for display
+        'color'    => $_POST['color']    ?? ''
     ];
     $d = $_SESSION['reg'];
-        // Set cookie if 'Remember Me' is checked
+
+    // Cookie for remember me
     if (isset($_POST['remember']) && $_POST['remember'] == '1') {
-        setcookie('email', $email, time() + (86400 * 30), "/"); // 30 days
+        setcookie('email', $d['email'], time() + (86400 * 30), "/"); // 30 days
     } else {
-        // Delete cookie if not checked
         setcookie('email', '', time() - 3600, "/");
     }
 
@@ -71,8 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $d = $_SESSION['reg'];
 }
-/* ----------  END STEP 1  ----------------- */
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

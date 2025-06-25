@@ -1,5 +1,5 @@
-
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST['cities']) || count($_POST['cities']) !== 10) {
         echo "<p style='color:red;'>You must select exactly 10 cities.</p>";
@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "</ul>";
     }
 }
-
+$bgColor = isset($_COOKIE['bg_color']) ? $_COOKIE['bg_color'] : '';
 ?>
 
 <!DOCTYPE html>

@@ -1,22 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
 
-<!DOCTYPE html> 
-<html lang="en"> 
-<head>     
-    <meta charset="UTF-8">     
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">     
-    <title>Registration</title>    
-
-    <style>         
+    <style>
        
-        body { 
+        body {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100%;
             font-family: Arial, sans-serif;
-        }          
-        .profile { 
+        }
+        .profile {
             width: 200px;
             height: 200px;
             border-radius: 50%;
@@ -27,18 +26,17 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
-        }          
-        
+        }
     
-        .container { 
+        .container {
             display: flex;
             width: 50%;
             height: 700px;
             margin-top: 20px;
             border: 2px solid black;
-        }          
+        }
     
-        .left { 
+        .left {
             flex: 1;
             border-right: 2px solid black;
             display: flex;
@@ -46,16 +44,16 @@
             align-items: center;
             justify-content: center;
             background-color: #a5eee9ad;
-        }          
+        }
     
-        .right { 
+        .right {
           flex: 1;
           display: flex;
           flex-direction: column;
        }
 
-        .top { 
-          flex: 1.5; 
+        .top {
+          flex: 1.5;
           border-bottom: 2px solid black;
           display: flex;
             flex-direction: column;
@@ -64,25 +62,23 @@
           background-color: #0099b733;
        }
 
-       .bottom { 
+       .bottom {
           flex: 2.5;
           background-color: #009dff52;
        }
 
     
-       .registration { 
+       .registration {
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
             width: 80%;
             margin-bottom: 10px;
-        }        
-        .login { 
+        }
+        .login{
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
             width: 80%;
-            
-        }          
-        
+        }
         .registration button {
             padding: 8px;
             background-color: black;
@@ -94,38 +90,42 @@
     </style>
         <?php
      session_start();
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST["login"])) {
     $conn = mysqli_connect("localhost", "root", "", "aqi");
-    $email = $_POST['email'];
-    $password = $_POST['password'];
- 
-    $res = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
-    $admin = mysqli_fetch_assoc($res);
- 
-    if ($admin && $admin['password'] === $password) {
-        $_SESSION['admin_email'] = $admin['email'];
-        $_SESSION['admin_name'] = $admin['name'];
-        header("Location: request.php");
-        exit();
-    } else {
-        echo "<p style='color:red; text-align:center;'>Invalid credentials.</p>";
+    $email = $_POST['login_email'];
+    $password = $_POST['login_password'];
+    $res = mysqli_query($conn, "SELECT * FROM users WHERE email='$email' and password='$password'");
+
+    if (mysqli_num_rows($res) == 1) {
+        $info = mysqli_fetch_assoc($res);
+        if ($info) {
+           
+             $_SESSION['login_email'] = $email;
+            $_SESSION['login_password'] = $password;
+            header("Location: request.php"); // Uncomment when needed
+            echo "<p style='color:green; text-align:center;'>Login successful.</p>";
+            exit();
+        }
     }
+
+    echo "<p style='color:red; text-align:center;'>Invalid credentials.</p>";
 }
+
 ?>
-</head> 
-<body>      
+</head>
+<body>
      
     <img class="profile" src="1.png" alt="Profile">
    <br>
-    <h1>Air Quality Index</h1>      
-    <div class="container">         
-        <div class="left">             
+    <h1>Air Quality Index</h1>
+    <div class="container">
+        <div class="left">
             <form class="registration" id="registrationForm" action="process.php" method="post">
-                <h3>Registration</h3> <br>                
+                <h3>Registration</h3> <br>
                 Name: <input type="text" id="name" name="name" placeholder="Full Name" required>
-                Email: <input type="email" id="email" name="email" placeholder="User Email" required>               
-                Password: <input type="password" id="password" placeholder="Password" required>   
-                Confirm Password: <input type="password" id="confirmPassword" placeholder="Confirm Password" required>  
+                Email: <input type="email" id="email" name="email" placeholder="User Email" required>
+                Password: <input type="password" id="password" name="password" placeholder="Password" required>
+                Confirm Password: <input type="password" id="confirmPassword" name="cpassword" placeholder="Confirm Password" required>
                 Date of Birth: <input type="date" id="dob"name="dob" required>
                 Country:
                 <select id="country"name="country" required>
@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="Switzerland">Switzerland</option>
                 </select>
 
-                Gender: 
+                Gender:
                 <label><input type="radio" name="gender" value="Male" name="gender"required> Male</label>
                 <label><input type="radio" name="gender" value="Female"> Female </label>
                 <label><input type="radio" name="gender" value="Other"> Other </label><br>
@@ -170,19 +170,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <br>
                 <button type="submit">Submit</button>
             
-            </form>  
-            
-            
+            </form>
+            <script>
+            const color = document.getElementById('color');
+        color.addEventListener('change', function () {
+            const selectedColor = this.value;
+            document.querySelector('.background').style.background = selectedColor;
+            document.cookie = `bg_color=${selectedColor}; path=/; max-age=${60 * 60 * 24 * 30}`;
+        });
+ 
+            </script>
 
-        </div>         
-        <div class="right">             
+        </div>
+        <div class="right">
             <div class="top">
-                <form class="login" id="loginForm" method="POST" action="request.php">
+                <form class="login" id="loginForm" method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 
-                    <h3>Login</h3>               
+                    <h3>Login</h3>
                    Email: <input type="email" name="login_email" placeholder="User Email" required>
-                   Password: <input type="password" name="login_password" placeholder="Password" required> <br>  
-                    <button type="submit">Login </button>  
+                   Password: <input type="password" name="login_password" placeholder="Password" required> <br>
+                    <button type="submit"name="login">Login </button>
             </div>
 
 
@@ -232,9 +239,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </table>
             </div>
                     
-        </div>     
-    </div>  
-
+        </div>
+    </div>
     <script>
         document.getElementById('registrationForm').addEventListener('submit', function (e) {
             e.preventDefault();
@@ -300,5 +306,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             this.submit();
         });
     </script>
-</body> 
+</body>
 </html>
